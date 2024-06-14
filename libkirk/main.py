@@ -230,6 +230,7 @@ def _get_framework(
         parser.error(f"'{fw_name}' framework is not available")
 
     try:
+        print(f"{fw_config=}")
         framework.setup(**fw_config)
     except FrameworkError as err:
         parser.error(str(err))
