@@ -40,7 +40,17 @@ class KselftestFramework(Framework):
         }
 
     def setup(self, **kwargs: dict) -> None:
-        self._root = kwargs.get("root", "/opt/linux/tools/testing/selftests")
+        self._root = "/opt/linux/tools/testing/selftests"
+        self._env = {
+            "KSELFTESTROOT": self._root,
+        }
+
+        env = kwargs.get("env", None)
+        if env:
+            self._env.update(env)
+
+        if self._env["KSELFTESTROOT"]:
+            self._root = self._env["KSELFTESTROOT"]
 
     async def _get_suite(self, sut: SUT, suite_name, suite_tests) -> Suite:
         """
